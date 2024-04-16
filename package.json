@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/saustindev/simplehttpmonitor/issues"
   },
-  "homepage": "https://github.com/saustindev/simplehttpmonitor#readme"
+  "homepage": "https://github.com/saustindev/simplehttpmonitor#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "systeminformation": "^5.22.7",
+    "yaml": "^2.4.1"
+  }
 }

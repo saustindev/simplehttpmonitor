@@ -4,22 +4,43 @@ const si = require('systeminformation')
 const yaml = require('yaml')
 
 const configFile = fs.readFileSync('config.yaml','utf8');
-var config = YAML.parse(configFile)
+var config = yaml.parse(configFile)
 
 var cpuUsage = []
+var cpuData = ""
 var ramUsage = []
+var currentRam = ""
 var netUsage = []
 var diskUsage = []
 var osInfo = ""
 var cpuTemp = []
+var hostname = ""
 
 var updateInfo = function() {
+	si.currentLoad(function(data) {
+		cpuUsage.push(data.currentLoad)
+	})
 	si.cpu(function(data) {
+		cpuData = data.manufacturer + " " + data.brand + " (" + data.cores + " cores @ " + data.speed + " GHz";
 	})
 	si.cpuTemperature(function(data) {
-		cpuTemp.append(data/1000);
+		cpuTemp.push(data/1000);
+	})
+	si.mem(function(data) {
+		ramUsage.push(data.used/data.total)
+		currentRam = data.used/1000000000 + "GB / " + data.total/1000000000 + "GB (" + data.free/1000000000 + "GB free" 
+	})
+	si.networkStats(function(data) {
+		netUsage.push(data[0].tx_sec)
+	})
+	si.disksIO(function(data) {
+		diskUsage.push(data.tIO_sec)
+	})
+	si.osInfo(function(data) {
+		osInfo = data.platform + " " + data.distro + " " + data.release
 	})
 }
+updateInfo()
 setInterval(updateInfo, config.updateInterval * 1000)
 
 //Use systeminformation to get data based on settings in the config file
@@ -28,24 +49,26 @@ var getDataString = function() {
 	var obj = new Object()
 	
 	if(config.showCPUUsage) {
-		obj.cpu = cpuUsage
+		obj.cpuUsage = cpuUsage
 	}
 	if(config.showRAMUsage) {
-		obj.ram = ramUsage
+		obj.ramUsage = ramUsage
+		obj.currentRam = currentRam
 	}
 	if(config.showNetUsage) {
-		obj.net = netUsage
+		obj.netUsage = netUsage
 	}
 	if(config.showDiskUsage) {
-		obj.disk = diskUsage
+		obj.diskUsage = diskUsage
 	}
 	if(config.showOS) {
 		obj.os = osInfo
+		obj.cpuData = cpuData
 	}
 	if(config.isHub) {
 		obj.ips = config.monitorIps
 	}
-	
+	obj.hostname = hostname
 	return JSON.stringify(obj)
 }
 
