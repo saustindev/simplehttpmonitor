@@ -1,0 +1,19 @@
+{
+  "name": "simplehttpmonitor",
+  "version": "1.0.0",
+  "description": "Get and consolidate system info over HTTP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saustindev/simplehttpmonitor.git"
+  },
+  "author": "saustindev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saustindev/simplehttpmonitor/issues"
+  },
+  "homepage": "https://github.com/saustindev/simplehttpmonitor#readme"
+}

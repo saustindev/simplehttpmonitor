@@ -1,0 +1,16 @@
+port: 8080
+# How often to update the data (in seconds)
+updateInterval: 30
+# The following options change what info is shown
+showCPUTemp: true
+showCPUUsage: true
+showRAMUsage: true
+showNetUsage: true
+showDiskUsage: true
+showOS: true
+# Setting the following to true will allow this device to collect info from others instead of just showing its own dashboard
+isHub: false
+# Add the IPs you want it to monitor here
+monitorIPs:
+- "192.168.1.1"
+-
