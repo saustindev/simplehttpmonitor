@@ -1,6 +1,8 @@
 port: 8080
 # How often to update the data (in seconds)
 updateInterval: 30
+# How long to hold history for (in minutes)
+historyLength: 1440
 # The following options change what info is shown
 showCPUTemp: true
 showCPUUsage: true
@@ -10,7 +12,8 @@ showDiskUsage: true
 showOS: true
 # Setting the following to true will allow this device to collect info from others instead of just showing its own dashboard
 isHub: false
-# Add the IPs you want it to monitor here
+# Add the IPs you want it to monitor here, with an optional label
 monitorIPs:
-- "192.168.1.1"
+- ip: 192.168.1.1
+  hostname: Server #1
 -
