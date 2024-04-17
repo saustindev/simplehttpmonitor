@@ -68,6 +68,7 @@ var getDataString = function() {
 	
 	if(config.showCPUUsage) {
 		obj.cpuUsage = cpuUsage
+		obj.cpuTemp = cpuTemp
 	}
 	if(config.showRAMUsage) {
 		obj.ramUsage = ramUsage
@@ -91,6 +92,7 @@ var getDataString = function() {
 }
 
 http.createServer(function (req, res) {
+	console.log(new Date().toISOString().replace('T', ' ').substr(0, 19) + ": " + req.method + " " + req.url);
 	if(req.method == "GET") {
 		//Provide system info in JSON format
 		if(req.url == "/api/info") {
@@ -110,6 +112,20 @@ http.createServer(function (req, res) {
 				data = fs.readFileSync('index.html', 'utf8');
 			}
 			res.writeHead(200, {'Content-Type':'text/html'});
+			res.write(data);
+			res.end();
+		}
+		else if(req.url == "/output.css") {
+			var data = fs.readFileSync('index.html', 'utf8');
+			
+			res.writeHead(200, {'Content-Type':'text/css'});
+			res.write(data);
+			res.end();
+		}
+		else if(req.url == "/usagecharts.js") {
+			var data = fs.readFileSync('usagecharts.js', 'utf8');
+			
+			res.writeHead(200, {'Content-Type':'text/javascript'});
 			res.write(data);
 			res.end();
 		}

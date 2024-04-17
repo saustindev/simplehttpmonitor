@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/saustindev/simplehttpmonitor#readme",
   "dependencies": {
+    "chart.js": "^4.4.2",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "systeminformation": "^5.22.7",
