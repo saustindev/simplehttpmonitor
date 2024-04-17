@@ -6,6 +6,8 @@ const yaml = require('yaml')
 const configFile = fs.readFileSync('config.yaml','utf8');
 var config = yaml.parse(configFile)
 
+var maxDataPoints = config.historyLength * 60 / config.updateInterval
+
 var cpuUsage = []
 var cpuData = ""
 var ramUsage = []
@@ -19,25 +21,41 @@ var hostname = ""
 var updateInfo = function() {
 	si.currentLoad(function(data) {
 		cpuUsage.push(data.currentLoad)
+		if(cpuUsage.length > maxDataPoints) {
+			cpuUsage.splice(0,1)
+		}
 	})
 	si.cpu(function(data) {
 		cpuData = data.manufacturer + " " + data.brand + " (" + data.cores + " cores @ " + data.speed + " GHz";
 	})
 	si.cpuTemperature(function(data) {
 		cpuTemp.push(data/1000);
+		if(cpuUsage.length > maxDataPoints) {
+			cpuUsage.splice(0,1)
+		}
 	})
 	si.mem(function(data) {
 		ramUsage.push(data.used/data.total)
+		if(ramUsage.length > maxDataPoints) {
+			ramUsage.splice(0,1)
+		}
 		currentRam = data.used/1000000000 + "GB / " + data.total/1000000000 + "GB (" + data.free/1000000000 + "GB free" 
 	})
 	si.networkStats(function(data) {
 		netUsage.push(data[0].tx_sec)
+		if(netUsage.length > maxDataPoints) {
+			netUsage.splice(0,1)
+		}
 	})
 	si.disksIO(function(data) {
 		diskUsage.push(data.tIO_sec)
+		if(diskUsage.length > maxDataPoints) {
+			diskUsage.splice(0,1)
+		}
 	})
 	si.osInfo(function(data) {
 		osInfo = data.platform + " " + data.distro + " " + data.release
+		hostname = data.hostname
 	})
 }
 updateInfo()
