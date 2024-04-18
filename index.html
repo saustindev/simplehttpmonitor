@@ -7,17 +7,32 @@
     <link href="output.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div id="widget" class="flex flex-col container mx-auto bg-indigo-400 shadow-lg rounded border-slate-500">
-		<div id="box1" class="">
-			<div class="text-white place-content-center" id="basicinfo"></div>
-			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="cpu"></canvas></div>
-			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="temp"></canvas></div>
-			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="mem"></canvas></div>
-			<div class="text-white place-content-center" id="memblurb"></div>
-			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="net"></canvas></div>
-			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="disk"></canvas></div>
-			<script type="module" src="usagecharts.js"></script>
-		</div>
+    <div id="widget" class="flex flex-col container mx-auto px-4 bg-indigo-400 shadow-lg rounded border-slate-500">
+      <div class="text-white place-content-center" id="basicinfo"></div>
+      <div id="box1" class="px-2 grid justify-items-center">
+  			<div class="bg-slate-100 place-content-center" style="width: 600px;">
+  				<canvas id="cpu"></canvas>
+  			</div>
+          
+  			<div class="bg-slate-100 place-content-center" style="width: 600px;">
+  				<canvas id="temp"></canvas>
+  			</div>
+  			
+        <div class="bg-slate-100 place-content-center" style="width: 600px;">
+  				<canvas id="mem"></canvas>
+  				<br>
+  				<div class="text-white place-content-center" id="memblurb"></div>
+  			</div>
+  			
+  			<div class="bg-slate-100 place-content-center" style="width: 600px;">
+  				<canvas id="net"></canvas>
+  			</div>
+  			
+        <div class="bg-slate-100 place-content-center" style="width: 600px;">
+  				<canvas id="disk"></canvas>
+  			</div>
+      </div>
     </div>
+    <script type="module" src="usagecharts.js"></script>
   </body>
 </html>
