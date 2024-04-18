@@ -1,6 +1,8 @@
 import Chart from 'chart.js/auto'
 
-(async function() {
+var chart1, chart2, chart3, chart4, chart5;
+
+var setCharts = async function() {
     $.ajax({
 		url:"/api/info", 
 		success:function(data) {	
@@ -9,6 +11,7 @@ import Chart from 'chart.js/auto'
 			const rawmemdata = data.ramUsage
 			const rawnetdata = data.netUsage
 			const rawdiskdata = data.diskUsage
+			const timedata = data.times
 			var cpudata = []
 			var tempdata = []
 			var memdata = []
@@ -22,22 +25,31 @@ import Chart from 'chart.js/auto'
 				rawcpudata.forEach(function(i) {
 					var obj = new Object();
 					obj.data = i;
+					obj.time = timedata[index];
 					obj.index = index++;
+					
 					cpudata.push(obj);
 				});
 				
-				new Chart(
+				if(chart1 != undefined) {
+					chart1.destroy()
+				}
+				
+				chart1 = new Chart(
 					document.getElementById('cpu'),
 					{
 						type: 'line',
 						data: {
-							labels: cpudata.map(row => row.index),
+							labels: cpudata.map(row => new Date(row.time).toTimeString().substring(0,9)),
 							datasets: [
 								{
 									label: 'CPU Utilization / %',
 									data: cpudata.map(row => row.data)
 								}
 							]
+						},
+						animation: {
+							duration: 0
 						}
 					}
 				);
@@ -48,21 +60,28 @@ import Chart from 'chart.js/auto'
 				rawtempdata.forEach(function(i) {
 					var obj = new Object();
 					obj.data = i;
+					obj.time = timedata[index];
 					obj.index = index++;
 					tempdata.push(obj);
 				});
-				new Chart(
+				if(chart2 != undefined) {
+					chart2.destroy()
+				}
+				chart2 = new Chart(
 					document.getElementById('temp'),
 					{
 						type: 'line',
 						data: {
-							labels: tempdata.map(row => row.index),
+							labels: tempdata.map(row => new Date(row.time).toTimeString().substring(0,9)),
 							datasets: [
 								{
 									label: 'CPU Temperature / C',
 									data: tempdata.map(row => row.data)
 								}
 							]
+						},
+						animation: {
+							duration: 0
 						}
 					}
 				);
@@ -73,22 +92,29 @@ import Chart from 'chart.js/auto'
 				rawmemdata.forEach(function(i) {
 					var obj = new Object();
 					obj.data = i;
+					obj.time = timedata[index];
 					obj.index = index++;
 					memdata.push(obj);
 				});
 				document.getElementById('memblurb').innerHTML = data.currentRam
-				new Chart(
+				if(chart3 != undefined) {
+					chart3.destroy()
+				}
+				chart3 = new Chart(
 					document.getElementById('mem'),
 					{
 						type: 'line',
 						data: {
-							labels: memdata.map(row => row.index),
+							labels: memdata.map(row => new Date(row.time).toTimeString().substring(0,9)),
 							datasets: [
 								{
 									label: 'Memory Utilization / %',
 									data: memdata.map(row => row.data)
 								}
 							]
+						},
+						animation: {
+							duration: 0
 						}
 					}
 				);
@@ -100,21 +126,28 @@ import Chart from 'chart.js/auto'
 				rawnetdata.forEach(function(i) {
 					var obj = new Object();
 					obj.data = i;
+					obj.time = timedata[index];
 					obj.index = index++;
 					netdata.push(obj);
 				});
-				new Chart(
+				if(chart4 != undefined) {
+					chart4.destroy()
+				}
+				chart4 = new Chart(
 					document.getElementById('net'),
 					{
 						type: 'line',
 						data: {
-							labels: netdata.map(row => row.index),
+							labels: netdata.map(row => new Date(row.time).toTimeString().substring(0,9)),
 							datasets: [
 								{
 									label: 'Network Usage / s',
 									data: netdata.map(row => row.data)
 								}
 							]
+						},
+						animation: {
+							duration: 0
 						}
 					}
 				);
@@ -127,27 +160,43 @@ import Chart from 'chart.js/auto'
 				rawdiskdata.forEach(function(i) {
 					var obj = new Object();
 					obj.data = i;
+					obj.time = timedata[index];
 					obj.index = index++;
 					diskdata.push(obj);
 				});
-				new Chart(
+				if(chart5 != undefined) {
+					chart5.destroy()
+				}
+				chart5 = new Chart(
 					document.getElementById('disk'),
 					{
 						type: 'line',
 						data: {
-							labels: diskdata.map(row => row.index),
+							labels: diskdata.map(row => new Date(row.time).toTimeString().substring(0,9)),
 							datasets: [
 								{
 									label: 'Disk Usage / s',
 									data: diskdata.map(row => row.data)
 								}
 							]
+						},
+						animation: {
+							duration: 0
 						}
 					}
 				);
 			}	
-				
+			
+			chart1.options.transitions.active.animation.duration = 0;
+			chart2.options.transitions.active.animation.duration = 0;
+			chart3.options.transitions.active.animation.duration = 0;
+			chart4.options.transitions.active.animation.duration = 0;
+			chart5.options.transitions.active.animation.duration = 0;
+			
+			setTimeout(setCharts, data.interval*1000);	
 		}
 	});
     
-})();
+}
+setCharts();
+

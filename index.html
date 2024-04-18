@@ -7,31 +7,33 @@
     <link href="output.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div id="widget" class="flex flex-col container mx-auto px-4 bg-indigo-400 shadow-lg rounded border-slate-500">
-      <div class="text-white place-content-center" id="basicinfo"></div>
-      <div id="box1" class="px-2 grid justify-items-center">
-  			<div class="bg-slate-100 place-content-center" style="width: 600px;">
+    <div id="widget" class="inline-block flex justify-items-center flex-col container mx-auto px-4 py-4 bg-indigo-400 shadow-lg rounded border-slate-500">
+      <div class="text-white text-center" id="basicinfo"></div>
+      <div id="box1" class="px-2 py-2 grid grid-cols-2 justify-items-center">
+  			<div class="bg-slate-100 px-1 place-content-center" style="width: 40%;">
   				<canvas id="cpu"></canvas>
   			</div>
           
-  			<div class="bg-slate-100 place-content-center" style="width: 600px;">
-  				<canvas id="temp"></canvas>
+  			<div class="bg-slate-100 px-1 py-1 place-content-center" style="width: 40%;">
+  				<canvas id="temp" style="width:90%"></canvas>
   			</div>
   			
-        <div class="bg-slate-100 place-content-center" style="width: 600px;">
-  				<canvas id="mem"></canvas>
-  				<br>
-  				<div class="text-white place-content-center" id="memblurb"></div>
-  			</div>
-  			
-  			<div class="bg-slate-100 place-content-center" style="width: 600px;">
-  				<canvas id="net"></canvas>
-  			</div>
-  			
-        <div class="bg-slate-100 place-content-center" style="width: 600px;">
-  				<canvas id="disk"></canvas>
+			<div class="bg-slate-100 px-1 py-1 place-content-center" style="width: 40%;">
+				<canvas id="mem" style="width:90%"></canvas>
+				<br>
+				<div class="text-black text-center" id="memblurb"></div>
+			</div>
+				
+			<div class="bg-slate-100 px-1 py-1 place-content-center" style="width: 40%;">
+				<canvas id="net" style="width:90%"></canvas>
+			</div>
+				
+			<div class="bg-slate-100 px-1 py-1 place-content-center" style="width: 40%;">
+  				<canvas id="disk" style="width:90%"></canvas>
   			</div>
       </div>
+    </div>
+    <div id="hubview">
     </div>
     <script type="module" src="usagecharts.js"></script>
   </body>

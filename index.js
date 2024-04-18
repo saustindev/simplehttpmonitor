@@ -17,6 +17,7 @@ var diskUsage = []
 var osInfo = ""
 var cpuTemp = []
 var hostname = ""
+var times = []
 
 var updateInfo = function() {
 	si.currentLoad(function(data) {
@@ -26,20 +27,20 @@ var updateInfo = function() {
 		}
 	})
 	si.cpu(function(data) {
-		cpuData = data.manufacturer + " " + data.brand + " (" + data.cores + " cores @ " + data.speed + " GHz";
+		cpuData = data.manufacturer + " " + data.brand + " (" + data.cores + " cores @ " + data.speed + " GHz)";
 	})
 	si.cpuTemperature(function(data) {
-		cpuTemp.push(data/1000);
-		if(cpuUsage.length > maxDataPoints) {
-			cpuUsage.splice(0,1)
+		cpuTemp.push(data.main);
+		if(cpuTemp.length > maxDataPoints) {
+			cpuTemp.splice(0,1)
 		}
 	})
 	si.mem(function(data) {
-		ramUsage.push(data.used/data.total)
+		ramUsage.push(100*data.used/data.total)
 		if(ramUsage.length > maxDataPoints) {
 			ramUsage.splice(0,1)
 		}
-		currentRam = data.used/1000000000 + "GB / " + data.total/1000000000 + "GB (" + data.free/1000000000 + "GB free" 
+		currentRam = data.used/1000000000 + "GB / " + data.total/1000000000 + "GB (" + data.free/1000000000 + "GB free)" 
 	})
 	si.networkStats(function(data) {
 		netUsage.push(data[0].tx_sec)
@@ -57,6 +58,7 @@ var updateInfo = function() {
 		osInfo = data.platform + " " + data.distro + " " + data.release
 		hostname = data.hostname
 	})
+	times.push(Date.now());
 }
 updateInfo()
 setInterval(updateInfo, config.updateInterval * 1000)
@@ -88,6 +90,8 @@ var getDataString = function() {
 		obj.ips = config.monitorIps
 	}
 	obj.hostname = hostname
+	obj.times = times
+	obj.interval = config.updateInterval
 	return JSON.stringify(obj)
 }
 
