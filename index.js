@@ -60,7 +60,7 @@ var updateInfo = function() {
 }
 updateInfo()
 setInterval(updateInfo, config.updateInterval * 1000)
-
+console.log("[simplehttpmonitor] Running backend server...")
 //Use systeminformation to get data based on settings in the config file
 //and then put it into a JSON object
 var getDataString = function() {
@@ -102,8 +102,8 @@ http.createServer(function (req, res) {
 			res.end();
 		}
 		//Provide the HTML webpage that will call the API and format 
-		//the data
-		else if(req.url == "index.html" || req.url == "/" || req.url == "/dashboard") {
+		//the data (Not needed when using parcel)
+		/*else if(req.url == "index.html" || req.url == "/" || req.url == "/dashboard") {
 			var data;
 			if(config.isHub) {
 				data = fs.readFileSync('hubIndex.html', 'utf8');
@@ -128,7 +128,7 @@ http.createServer(function (req, res) {
 			res.writeHead(200, {'Content-Type':'text/javascript'});
 			res.write(data);
 			res.end();
-		}
+		}*/
 		else {
 			res.writeHead(404, {'Content-Type':'text/plain'});
 			res.end();

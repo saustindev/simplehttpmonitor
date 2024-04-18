@@ -1,8 +1,8 @@
 port: 8080
 # How often to update the data (in seconds)
-updateInterval: 30
+updateInterval: 1
 # How long to hold history for (in minutes)
-historyLength: 1440
+historyLength: 5
 # The following options change what info is shown
 showCPUTemp: true
 showCPUUsage: true

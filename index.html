@@ -8,12 +8,14 @@
   </head>
   <body>
     <div id="widget" class="flex flex-col container mx-auto bg-indigo-400 shadow-lg rounded border-slate-500">
-		<div id="box1" class=>
-			<div style="width: 800px;"><canvas id="cpu"></canvas></div>
-			<div style="width: 800px;"><canvas id="temp"></canvas></div>
-			<div style="width: 800px;"><canvas id="mem"></canvas></div>
-			<div style="width: 800px;"><canvas id="net"></canvas></div>
-			<div style="width: 800px;"><canvas id="disk"></canvas></div>
+		<div id="box1" class="">
+			<div class="text-white place-content-center" id="basicinfo"></div>
+			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="cpu"></canvas></div>
+			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="temp"></canvas></div>
+			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="mem"></canvas></div>
+			<div class="text-white place-content-center" id="memblurb"></div>
+			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="net"></canvas></div>
+			<div class="bg-slate-100 place-content-center" style="width: 600px;"><canvas id="disk"></canvas></div>
 			<script type="module" src="usagecharts.js"></script>
 		</div>
     </div>

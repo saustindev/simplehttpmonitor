@@ -2,9 +2,12 @@
   "name": "simplehttpmonitor",
   "version": "1.0.0",
   "description": "Get and consolidate system info over HTTP",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend": "parcel index.html",
+    "build": "npx tailwindcss -i input.css -o output.css --watch && parcel build index.html",
+    "backend": "node index.js",
+    "dev": "concurrently --kill-others \"npm run backend\" \"npm run frontend\""
   },
   "repository": {
     "type": "git",
@@ -18,12 +21,14 @@
   "homepage": "https://github.com/saustindev/simplehttpmonitor#readme",
   "dependencies": {
     "chart.js": "^4.4.2",
+    "concurrently": "^8.2.2",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "systeminformation": "^5.22.7",
     "yaml": "^2.4.1"
   },
   "devDependencies": {
+    "parcel": "^2.12.0",
     "tailwindcss": "^3.4.3"
   }
 }

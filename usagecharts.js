@@ -6,7 +6,7 @@ import Chart from 'chart.js/auto'
 		success:function(data) {	
 			const rawcpudata = data.cpuUsage
 			const rawtempdata = data.cpuTemp
-			const rawmemdata = data.memUsage
+			const rawmemdata = data.ramUsage
 			const rawnetdata = data.netUsage
 			const rawdiskdata = data.diskUsage
 			var cpudata = []
@@ -15,116 +15,138 @@ import Chart from 'chart.js/auto'
 			var netdata = []
 			var diskdata = []
 			var index = 0;
-			rawcpudata.forEach(function(i) {
-				var obj = new Object();
-				obj.data = i;
-				obj.index = index++;
-				cpudata.push(obj);
-			});
+			
+			document.getElementById('basicinfo').innerHTML = "<h3>" + data.hostname + "</h3><br>" + data.cpuData + "<br>" + data.osInfo;
+			
+			if(rawcpudata != undefined) {
+				rawcpudata.forEach(function(i) {
+					var obj = new Object();
+					obj.data = i;
+					obj.index = index++;
+					cpudata.push(obj);
+				});
+				
+				new Chart(
+					document.getElementById('cpu'),
+					{
+						type: 'line',
+						data: {
+							labels: cpudata.map(row => row.index),
+							datasets: [
+								{
+									label: 'CPU Utilization / %',
+									data: cpudata.map(row => row.data)
+								}
+							]
+						}
+					}
+				);
+			}
+			
 			index = 0;
-			rawtempdata.forEach(function(i) {
-				var obj = new Object();
-				obj.data = i;
-				obj.index = index++;
-				tempdata.push(obj);
-			});
+			if(rawtempdata != undefined) {
+				rawtempdata.forEach(function(i) {
+					var obj = new Object();
+					obj.data = i;
+					obj.index = index++;
+					tempdata.push(obj);
+				});
+				new Chart(
+					document.getElementById('temp'),
+					{
+						type: 'line',
+						data: {
+							labels: tempdata.map(row => row.index),
+							datasets: [
+								{
+									label: 'CPU Temperature / C',
+									data: tempdata.map(row => row.data)
+								}
+							]
+						}
+					}
+				);
+			}
+			
 			index = 0;
-			rawmemdata.forEach(function(i) {
-				var obj = new Object();
-				obj.data = i;
-				obj.index = index++;
-				memdata.push(obj);
-			});
+			if(rawmemdata != undefined) {
+				rawmemdata.forEach(function(i) {
+					var obj = new Object();
+					obj.data = i;
+					obj.index = index++;
+					memdata.push(obj);
+				});
+				document.getElementById('memblurb').innerHTML = data.currentRam
+				new Chart(
+					document.getElementById('mem'),
+					{
+						type: 'line',
+						data: {
+							labels: memdata.map(row => row.index),
+							datasets: [
+								{
+									label: 'Memory Utilization / %',
+									data: memdata.map(row => row.data)
+								}
+							]
+						}
+					}
+				);
+			}
+			
 			index = 0;
-			rawnetdata.forEach(function(i) {
-				var obj = new Object();
-				obj.data = i;
-				obj.index = index++;
-				netdata.push(obj);
-			});
+			
+			if(rawnetdata != undefined) {
+				rawnetdata.forEach(function(i) {
+					var obj = new Object();
+					obj.data = i;
+					obj.index = index++;
+					netdata.push(obj);
+				});
+				new Chart(
+					document.getElementById('net'),
+					{
+						type: 'line',
+						data: {
+							labels: netdata.map(row => row.index),
+							datasets: [
+								{
+									label: 'Network Usage / s',
+									data: netdata.map(row => row.data)
+								}
+							]
+						}
+					}
+				);
+			}
+			
 			index = 0;
-			rawdiskdata.forEach(function(i) {
-				var obj = new Object();
-				obj.data = i;
-				obj.index = index++;
-				diskdata.push(obj);
-			});
-
-			new Chart(
-				document.getElementById('cpu'),
-				{
-					type: 'line',
-					data: {
-						labels: cpudata.map(row => row.index),
-						datasets: [
-							{
-								label: 'Acquisitions by year',
-								data: cpudata.map(row => row.data)
-							}
-						]
+			
+			if(rawdiskdata != undefined) {
+				
+				rawdiskdata.forEach(function(i) {
+					var obj = new Object();
+					obj.data = i;
+					obj.index = index++;
+					diskdata.push(obj);
+				});
+				new Chart(
+					document.getElementById('disk'),
+					{
+						type: 'line',
+						data: {
+							labels: diskdata.map(row => row.index),
+							datasets: [
+								{
+									label: 'Disk Usage / s',
+									data: diskdata.map(row => row.data)
+								}
+							]
+						}
 					}
-				}
-			);
-			new Chart(
-				document.getElementById('temp'),
-				{
-					type: 'line',
-					data: {
-						labels: tempdata.map(row => row.index),
-						datasets: [
-							{
-								label: 'Acquisitions by year',
-								data: tempdata.map(row => row.data)
-							}
-						]
-					}
-				}
-			);
-			new Chart(
-				document.getElementById('mem'),
-				{
-					type: 'line',
-					data: {
-						labels: memdata.map(row => row.index),
-						datasets: [
-							{
-								label: 'Acquisitions by year',
-								data: memdata.map(row => row.data)
-							}
-						]
-					}
-				}
-			);
-			new Chart(
-				document.getElementById('net'),
-				{
-					type: 'line',
-					data: {
-						labels: netdata.map(row => row.index),
-						datasets: [
-							{
-								label: 'Acquisitions by year',
-								data: netdata.map(row => row.data)
-							}
-						]
-					}
-				}
-			);
-			new Chart(
-				document.getElementById('disk'),
-				{
-					type: 'line',
-					data: {
-						labels: diskdata.map(row => row.index),
-						datasets: [
-							{
-								label: 'Acquisitions by year',
-								data: diskdata.map(row => row.data)
-							}
-						]
-					}
-				}
-			);
+				);
+			}	
+				
 		}
 	});
     
