@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "frontend": "parcel index.html",
-    "build": "npx tailwindcss -i input.css -o output.css --watch && parcel build index.html",
+    "build": "npx tailwindcss -i input.css -o output.css && parcel build index.html",
     "backend": "node index.js",
     "dev": "concurrently --kill-others \"npm run backend\" \"npm run frontend\""
   },

@@ -16,7 +16,7 @@ import Chart from 'chart.js/auto'
 			var diskdata = []
 			var index = 0;
 			
-			document.getElementById('basicinfo').innerHTML = "<h3>" + data.hostname + "</h3><br>" + data.cpuData + "<br>" + data.osInfo;
+			document.getElementById('basicinfo').innerHTML = "<h3>" + data.hostname + "</h3><br>" + data.cpuData + "<br>" + data.os;
 			
 			if(rawcpudata != undefined) {
 				rawcpudata.forEach(function(i) {
