@@ -4,8 +4,8 @@
   "description": "Get and consolidate system info over HTTP",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "frontend": "parcel index.html",
-    "build": "npx tailwindcss -i input.css -o output.css && parcel build index.html",
+    "frontend": "npx parcel index.html",
+    "build": "npx tailwindcss -i input.css -o output.css && npx parcel build index.html",
     "backend": "node index.js",
     "dev": "concurrently --kill-others \"npm run backend\" \"npm run frontend\""
   },
@@ -25,7 +25,8 @@
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "systeminformation": "^5.22.7",
-    "yaml": "^2.4.1"
+    "yaml": "^2.4.1",
+    "parcel": "^2.12.0"
   },
   "devDependencies": {
     "parcel": "^2.12.0",
